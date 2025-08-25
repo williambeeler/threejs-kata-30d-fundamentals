@@ -3,7 +3,9 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 // Scene
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x000000);
+scene.background = new THREE.Color(0xD6D6D6);
+
+console.log(scene)
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
@@ -26,14 +28,14 @@ renderer.setPixelRatio(window.devicePixelRatio);
 const controls = new OrbitControls(camera, renderer.domElement);
 
 // Light
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+const ambientLight = new THREE.AmbientLight(0xD6D6D6, 0.9);
 scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(5, 10, 7);
 scene.add(directionalLight);
 
-// Example Object (Day 1: Hello Cube)
+// Hello Cube 1
 const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshStandardMaterial({ color: 0x0077ff });
 const cube = new THREE.Mesh(geometry, material);
