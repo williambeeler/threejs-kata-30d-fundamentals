@@ -1,16 +1,18 @@
 # Three.js Kata 30-Day Fundamentals
 
+
+
 This is a 30-Day Three.js Kata Plan that builds your skills in small, focused steps while leaving you with a portfolio of bite-sized projects.
 
 
 | Day | Tag     | Kata                      | Focus                                                              |
 | --- | ------- | ------------------------- | ------------------------------------------------------------------ |
-| 1   | day-01  | **Hello Cube**            | Create a spinning cube with `MeshBasicMaterial`.                   |
-| 2   | day-02  | **Colors & Materials**    | Try `MeshPhongMaterial`, `MeshStandardMaterial`, and basic colors. |
-| 3   | day-03  | **Lighting 101**          | Experiment with Ambient, Directional, and Point lights.            |
-| 4   | day-04  | **Orbit Controls**        | Add camera controls using `OrbitControls`.                         |
-| 5   | day-05  | **Multiple Objects**      | Render a simple scene with multiple shapes.                        |
-| 6   | day-06  | **Resize Handling**       | Make your scene responsive to browser resize.                      |
+| 1   | proj-1  | **Hello Cube**            | Create a spinning cube with `MeshBasicMaterial`.                   |
+| 2   | proj-2  | **Colors & Materials**    | Try `MeshPhongMaterial`, `MeshStandardMaterial`, and basic colors. |
+| 3   |  | **Lighting 101**          | Experiment with Ambient, Directional, and Point lights.            |
+| 4   |  | **Orbit Controls**        | Add camera controls using `OrbitControls`.                         |
+| 5   |  | **Multiple Objects**      | Render a simple scene with multiple shapes.                        |
+| 6   |  | **Resize Handling**       | Make your scene responsive to browser resize.                      |
 | 7   | day-07  | **Review & Mini Scene**   | Build a small “room” scene using all skills so far.                |
 | 8   | day-08  | **Click to Change Color** | Detect clicks on an object and change its color.                   |
 | 9   | day-09  | **Mouse Hover Highlight** | Highlight an object on mouseover using raycasting.                 |
@@ -40,3 +42,5 @@ This is a 30-Day Three.js Kata Plan that builds your skills in small, focused st
 ## Learning 
 
 - [Anatomy of a project for Three.js](/docs/Learning/threejs-anatomy-of-project.md)
+- [Lil GUI stuff](/docs/Learning/lil-gui-stuff.md)
+- [Three.js Helpers](/docs/Learning/threejs-helpers.md)
