@@ -44,3 +44,5 @@ This is a 30-Day Three.js Kata Plan that builds your skills in small, focused st
 - [Anatomy of a project for Three.js](/docs/Learning/threejs-anatomy-of-project.md)
 - [Lil GUI stuff](/docs/Learning/lil-gui-stuff.md)
 - [Three.js Helpers](/docs/Learning/threejs-helpers.md)
+- [Sine in Math](/docs/Learning/all-about-sine-math.md)
+- [Cosine in Math](/docs/Learning/all-about-cosine-math.md)
