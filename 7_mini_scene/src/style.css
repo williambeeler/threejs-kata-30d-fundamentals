@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+}
+
+.lil-gui {
+	--hover-color: #78be8b;
+}

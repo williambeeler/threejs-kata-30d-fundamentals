@@ -13,9 +13,9 @@ This is a 30-Day Three.js Kata Plan that builds your skills in small, focused st
 | 4   |  | **Orbit Controls**        | Add camera controls using `OrbitControls`.                         |
 | 5   |  | **Multiple Objects**      | Render a simple scene with multiple shapes.                        |
 | 6   |  | **Resize Handling**       | Make your scene responsive to browser resize.                      |
-| 7   | day-07  | **Review & Mini Scene**   | Build a small “room” scene using all skills so far.                |
-| 8   | day-08  | **Click to Change Color** | Detect clicks on an object and change its color.                   |
-| 9   | day-09  | **Mouse Hover Highlight** | Highlight an object on mouseover using raycasting.                 |
+| 7   | proj-3  | **Review & Mini Scene**   | Build a small “room” scene using all skills so far.                |
+| 8   |  | **Click to Change Color** | Detect clicks on an object and change its color.                   |
+| 9   | proj-4  | **Mouse Hover Highlight** | Highlight an object on mouseover using raycasting.                 |
 | 10  | day-10  | **Keyboard Controls**     | Move an object with arrow keys/WASD.                               |
 | 11  | day-11  | **Animate Properties**    | Use GSAP or Three.js animations to animate rotation/scale.         |
 | 12  | day-12  | **Camera Switcher**       | Toggle between multiple cameras (e.g., perspective & orthographic).|
