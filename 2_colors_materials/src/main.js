@@ -13,17 +13,47 @@ const otherFolder = gui.addFolder('Other').open()
 const floorFolder = geometryFolder.addFolder('Floor').open()
 const cubeFolder = geometryFolder.addFolder('Cube').open()
 const torusFolder = geometryFolder.addFolder('Torus').open()
-
+const coneFolder = geometryFolder.addFolder('Cone').open()
 
 // Scene
 const scene = new THREE.Scene()
-scene.background = new THREE.Color('#8bb388')
+const sceneBackgroundColor = {
+  stop_1: '#9f5b5b',
+  stop_2: '#3838ff', 
+  stop_3: '#070646'
+}
+function createGradientTexture() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1;
+  canvas.height = 256;
+  const ctx = canvas.getContext('2d');
 
-sceneFolder.addColor(scene, 'background').name('Scene Background Color')
+  const gradient = ctx.createLinearGradient(0, 0, 0, 256);
+  gradient.addColorStop(0, sceneBackgroundColor.stop_1);
+  gradient.addColorStop(0.5, sceneBackgroundColor.stop_2);
+  gradient.addColorStop(1, sceneBackgroundColor.stop_3);
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 1, 256);
+
+  return new THREE.CanvasTexture(canvas);
+}
+function updateSceneBackground() {
+  const gradientTexture = createGradientTexture()
+  scene.background = gradientTexture
+  // scene.background = new THREE.Color('#8bb388')
+}
+
+updateSceneBackground()
+
+sceneFolder.addColor(sceneBackgroundColor, 'stop_1').name('Scene Background Color 1').onChange(() => updateSceneBackground())
+sceneFolder.addColor(sceneBackgroundColor, 'stop_2').name('Scene Background Color 2').onChange(() => updateSceneBackground())
+sceneFolder.addColor(sceneBackgroundColor, 'stop_3').name('Scene Background Color 3').onChange(() => updateSceneBackground())
 
 //Axes and other helpers
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
+axesHelper.visible = false
 otherFolder.add(axesHelper, 'visible').name('Enable Axes helper')
 
 // Camera
@@ -56,6 +86,12 @@ const bronzeMaterial = new THREE.MeshPhongMaterial({
   emissive: '#200404',
   specular: '#ecc293'
 })
+const greenMaterial = new THREE.MeshPhongMaterial({
+  color: '#3ea437',
+  opacity: 0.7, 
+  emissive: '#000',
+  specular: '#000',
+})
 
 
 // Lights
@@ -75,9 +111,9 @@ lightingFolder.add(directionalLight, 'intensity', 0, 5, 0.1).name('Directional L
 //     Floor Geometry
 const floorParameters = {
   width: 8,
-  height: 15,
-  widthSegments: 5,
-  heightSegments: 5
+  height: 8,
+  widthSegments: 8,
+  heightSegments: 8
 }
 let floorGeometry = new THREE.PlaneGeometry(floorParameters.width, floorParameters.height, floorParameters.widthSegments, floorParameters.heightSegments)
 const floorMaterial = new THREE.MeshStandardMaterial({ color: '#0077ff' })
@@ -87,13 +123,13 @@ scene.add(floor)
 
 // Function to rebuild geometry
 function updateFloor() {
-  floor.geometry.dispose(); // free memory
+  floor.geometry.dispose() // free memory
   floor.geometry = new THREE.PlaneGeometry(
     floorParameters.width,
     floorParameters.height,
     floorParameters.widthSegments,
     floorParameters.heightSegments
-  );
+  )
 }
 
 floorFolder.add(floorMaterial, 'wireframe').name('Floor Wireframe')
@@ -177,6 +213,62 @@ function torusAnimationLoop()
   torus.position.y = mid + amp * Math.sin(t * speed);
 
 }
+
+//    Cone Geometry  
+// =====================
+const coneParameters = {
+  radius: 0.7,
+  height: 1.1,
+  radialSegments: 32,
+  heightSegments: 1,
+  openEnded: false,
+  thetaStart: 0,
+  thetaLength: Math.PI * 2
+}
+// Function to rebuild torus geometry
+function updateCone() {
+  cone.geometry.dispose()
+  cone.geometry = new THREE.ConeGeometry(
+    coneParameters.radius,
+    coneParameters.height,
+    coneParameters.radialSegments,
+    coneParameters.heightSegments,
+    coneParameters.openEnded,
+    coneParameters.thetaStart,
+    coneParameters.thetaLength
+  )
+}
+const coneGeometry = new THREE.ConeGeometry(
+  coneParameters.radius,
+  coneParameters.height,
+  coneParameters.radialSegments,
+  coneParameters.heightSegments,
+  coneParameters.openEnded,
+  coneParameters.thetaStart,
+  coneParameters.thetaLength
+)
+const coneMaterial = greenMaterial
+const cone = new THREE.Mesh(coneGeometry, coneMaterial)
+scene.add( cone )
+
+cone.position.set(1.8, 1.4, -2)
+cone.rotation.set(-0.4, 0, 0.4)
+
+coneFolder.add(coneParameters, 'radius', 0, 5, 0.1).name('Radius').onChange(updateCone)
+coneFolder.add(coneParameters, 'height', 0, 5, 0.1).name('Height').onChange(updateCone)
+coneFolder.add(coneParameters, 'radialSegments', 0, 120, 1).name('Radial segments').onChange(updateCone)
+coneFolder.add(coneParameters, 'heightSegments', 0, 64, 1).name('Height segments').onChange(updateCone)
+coneFolder.add(coneParameters, 'openEnded').name('Open ended').onChange(updateCone)
+coneFolder.add(coneParameters, 'thetaStart', 0, 64, 1).name('Theta Start').onChange(updateCone)
+coneFolder.add(coneParameters, 'thetaLength', 0, 64, 1).name('Theta length').onChange(updateCone)
+
+coneFolder.add(cone.position, 'x', -10, 10, 0.2).name('cone X')
+coneFolder.add(cone.position, 'y', -10, 10, 0.2).name('cone Y')
+coneFolder.add(cone.position, 'z', -10, 10, 0.2).name('cone Z')
+coneFolder.add(cone.rotation, 'x', -10, 10, 0.2).name('Rotate X')
+coneFolder.add(cone.rotation, 'y', -10, 10, 0.2).name('Rotate Y')
+coneFolder.add(cone.rotation, 'z', -10, 10, 0.2).name('Rotate Z')
+coneFolder.add(coneMaterial, 'wireframe').name('Wireframe')
 
 // Resize
 window.addEventListener('resize', () => {
