@@ -148,7 +148,10 @@ lightingFolder.add(directionalLight.rotation, 'x', -10, 10, 0.2).name('DL Rotate
 lightingFolder.add(directionalLight.rotation, 'y', -10, 10, 0.2).name('DL Rotate Y')
 lightingFolder.add(directionalLight.rotation, 'z', -10, 10, 0.2).name('DL Rotate Z')
 
-// GRA
+// Vector2 and Raycasting = used for the clicking part of this excercise
+const raycaster = new THREE.Raycaster()
+const mouse = new THREE.Vector2()
+
 // ====== Geometry ========
 
 //    Floor Geometry  
@@ -393,6 +396,29 @@ function coneAnimationLoop()
   cone.rotation.y += coneParameters.speed
   cone.rotation.z += coneParameters.speed
 }
+
+// Window click event and action
+
+window.addEventListener('mouseup', (event) => {
+  // Convert mouse position to normalized device coordinates (-1 to +1)
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+
+  // Update the picking ray with the camera and mouse position
+  raycaster.setFromCamera(mouse, camera)
+
+  // Calculate objects intersecting the ray
+  const intersects = raycaster.intersectObjects(scene.children, true)
+
+  if (intersects.length > 0) {
+    console.log('You clicked on:', intersects[0].object)
+    // Do something with the object
+    intersects[0].object.material.color.set(0xff0000)
+  }
+})
+
+
+// ========== end of project / finish with Resize and Animate ===========
 
 // Resize
 window.addEventListener('resize', () => {
