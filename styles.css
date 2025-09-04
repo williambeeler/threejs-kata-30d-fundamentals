@@ -63,3 +63,14 @@ p.description {
     color: rgb(222, 165, 41);
     text-decoration: none;
 }
+
+.table-responsive .table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table-responsive .table th {
+    background: #8b8b8b;
+    padding: 15px;
+    font-size: 20px;
+}
