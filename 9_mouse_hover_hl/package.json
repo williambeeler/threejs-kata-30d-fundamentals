@@ -1,0 +1,22 @@
+{
+  "name": "9_mouse_hover_hl",
+  "version": "1.0.0",
+  "description": "Project 4 - Mouse Hover Highlight",
+  "keywords": [
+    "threejs",
+    "kata"
+  ],
+  "license": "MIT",
+  "author": "William Beeler",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lil-gui": "^0.20.0",
+    "three": "^0.179.1",
+    "vite": "^7.1.3"
+  }
+}
