@@ -1,6 +1,6 @@
 # Three.js Kata 30-Day Fundamentals
 
-
+![](/docs/media/threejs-30d-fundamentals-screen.png "Threejs 30 day fundamentals screen.")
 
 This is a 30-Day Three.js Kata Plan that builds your skills in small, focused steps while leaving you with a portfolio of bite-sized projects.
 
