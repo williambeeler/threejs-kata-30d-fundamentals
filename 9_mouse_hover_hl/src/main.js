@@ -1,4 +1,6 @@
-// ISC
+// Testing Raycaster 
+// Docs: https://threejs.org/docs/#api/en/core/Raycaster
+// Threejs Journey: https://threejs-journey.com/lessons/raycaster-and-mouse-events
 // Imports 
 import * as THREE from 'three'
 import { GUI } from 'lil-gui'
@@ -7,9 +9,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 // Lil' goo 
 const gui = new GUI()
 const sceneFolder = gui.addFolder('Scene').close()
-// const cameraFolder = gui.addFolder('Camera Folder').close()
+const rayFolder = gui.addFolder('Ray Folder').close()
 const lightingFolder = gui.addFolder('Lighting').close()
-// const otherFolder = gui.addFolder('Other').close()
+const ballsFolder = gui.addFolder('Balls').open()
 
 // Scene
 const scene = new THREE.Scene()
@@ -47,7 +49,11 @@ sceneFolder.addColor(sceneBackgroundColor, 'stop_3').name('Scene Background Colo
 
 // Camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100)
-camera.position.set(4.4, 3.4, 6)
+camera.position.set(0, 11, 3)
+
+sceneFolder.add(camera.position, 'x', -20, 20, 1).name('Camera X')
+sceneFolder.add(camera.position, 'y', -20, 20, 1).name('Camera Y')
+sceneFolder.add(camera.position, 'z', -20, 20, 1).name('Camera Z')
 
 // RCL
 // Renderer
@@ -98,48 +104,72 @@ lightingFolder.add(directionalLight.rotation, 'x', -10, 10, 0.2).name('DL Rotate
 lightingFolder.add(directionalLight.rotation, 'y', -10, 10, 0.2).name('DL Rotate Y')
 lightingFolder.add(directionalLight.rotation, 'z', -10, 10, 0.2).name('DL Rotate Z')
 
-// Vector2 and Raycasting = used for the clicking part of this excercise
-const raycaster = new THREE.Raycaster()
-const mouse = new THREE.Vector2()
-
 // ====== Geometry ========
 
-//    Floor Geometry  
+//    Ball Geometry  
 // =====================
-const floorParameters = {
-  width: 13,
-  height: 5,
-  widthSegments: 8,
-  heightSegments: 8
-}
-let floorGeometry = new THREE.PlaneGeometry(floorParameters.width, floorParameters.height, floorParameters.widthSegments, floorParameters.heightSegments)
-const floorMaterial = new THREE.MeshStandardMaterial({ color: '#656462' })
-const floor = new THREE.Mesh(floorGeometry, floorMaterial)
-floor.rotation.x = - Math.PI / 2
-scene.add(floor)
+const ball1_geometry = new THREE.SphereGeometry(2, 32, 16)
+const ball2_geometry = new THREE.SphereGeometry(2, 32, 16)
+const ball3_geometry = new THREE.SphereGeometry(2, 32, 16)
+const ball1 = new THREE.Mesh(ball1_geometry, greenMaterial)
+const ball2 = new THREE.Mesh(ball2_geometry, greenMaterial)
+const ball3 = new THREE.Mesh(ball3_geometry, greenMaterial)
+scene.add(ball1)
+scene.add(ball2)
+scene.add(ball3)
 
-// Function to rebuild geometry
-function updateFloor() {
-  floor.geometry.dispose() // free memory
-  floor.geometry = new THREE.PlaneGeometry(
-    floorParameters.width,
-    floorParameters.height,
-    floorParameters.widthSegments,
-    floorParameters.heightSegments
-  )
-}
+ball1.position.set(-5.2, 2, 0)
+ball2.position.set(0, 2, 0)
+ball3.position.set(5.2, 2, 0)
 
-gui.add(floorMaterial, 'wireframe').name('Floor Wireframe')
-gui.add(floorParameters, 'width', 1, 30, 1).name('Floor width').onChange(updateFloor)
-gui.add(floorParameters, 'height', 1, 30, 1).name('Floor height').onChange(updateFloor)
-gui.add(floorParameters, 'widthSegments', 1, 20, 1).name('Width segments').onChange(updateFloor)
-gui.add(floorParameters, 'heightSegments', 1, 20, 1).name('Height segments').onChange(updateFloor)
+ballsFolder.add(ball1.position, 'x', -10, 10, 0.2).name('Ball 1 X')
+ballsFolder.add(ball1.position, 'y', -10, 10, 0.2).name('Ball 1 Y')
+ballsFolder.add(ball1.position, 'z', -10, 10, 0.2).name('Ball 1 Z')
+
+ballsFolder.add(ball2.position, 'x', -10, 10, 0.2).name('Ball 2 X')
+ballsFolder.add(ball2.position, 'y', -10, 10, 0.2).name('Ball 2 Y')
+ballsFolder.add(ball2.position, 'z', -10, 10, 0.2).name('Ball 2 Z')
+
+ballsFolder.add(ball3.position, 'x', -10, 10, 0.2).name('Ball 3 X')
+ballsFolder.add(ball3.position, 'y', -10, 10, 0.2).name('Ball 3 Y')
+ballsFolder.add(ball3.position, 'z', -10, 10, 0.2).name('Ball 3 Z')
+
+
+// Vector2 and Raycasting = used for the clicking part of this excercise
+const rayParams = {
+  originX: -3,
+  originY: 0,
+  originZ: 0,
+  directionX: 10,
+  directionY: 0,
+  directionZ: 0,
+  length: 10
+}
+const raycaster = new THREE.Raycaster()
+const mouse = new THREE.Vector2()
+const origin = new THREE.Vector3(rayParams.originX, rayParams.originY, rayParams.originZ)
+const direction = new THREE.Vector3(rayParams.directionX, rayParams.directionY, rayParams.directionZ)
+
+// visualize with an ArrowHelper
+const arrow = new THREE.ArrowHelper(direction, origin, 10, 0xff0000)
+scene.add(arrow)
+
+raycaster.set(origin, direction)
+arrow.position.copy(origin)
+arrow.setDirection(direction)
+
+arrow.setLength(rayParams.length)
+console.log(arrow)
+
+rayFolder.add(arrow, 'visible').name('Show Ray')
+rayFolder.add(rayParams, 'length', 0.1, 50, 0.1)
+  .name('Ray Length')
+  .onChange(v => arrow.setLength(v))
 
 
 
 
 // Window click event and action
-
 window.addEventListener('mouseup', (event) => {
   // Convert mouse position to normalized device coordinates (-1 to +1)
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1
@@ -154,6 +184,10 @@ window.addEventListener('mouseup', (event) => {
   if (intersects.length > 0) {
     console.log('You clicked on:', intersects[0].object)
   }
+})
+
+window.addEventListener('mouseover', (event) => {
+  //Do something
 })
 
 

@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: '/7_mini_scene/dist/',
+  base: '/9_mouse_hover_hl/dist/',
   server: {
     open: true
   }
