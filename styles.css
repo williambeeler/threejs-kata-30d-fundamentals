@@ -57,11 +57,11 @@ p.description {
 }
 
 .container a {
-    color: rgb(252 187 46);
+    color: #2e48fc;
     text-decoration: underline;
 }
 .container a:hover {
-    color: rgb(222, 165, 41);
+    color: #192996;
     text-decoration: none;
 }
 
